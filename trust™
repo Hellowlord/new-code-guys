@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trust™ Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .product {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product h3 {
+      margin-top: 0;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .price {
+      font-size: 20px;
+      color: green;
+      margin: 10px 0;
+    }
+
+    .buy-button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .buy-button:hover {
+      background: #0056b3;
+    }
+
+    .cart {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .cart h2 {
+      margin-top: 0;
+    }
+
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cart li {
+      padding: 5px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    .warning {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Trust™ Shop
+  </header>
+
+  <div class="container">
+    <div class="product-list">
+      <div class="product">
+        <h3>Smart Dog</h3>
+        <img src="OIP.webp" alt="Smart Dog">
+<p class="price">EGP 2500</p>
+        <p>Clever robot dog that obeys your commands.</p>
+        <button class="buy-button" onclick="addToCart('Smart Dog', 2500)">Add to Cart</button>
+        <button class="buy-button">Buy Now</button>
+      </div>
+
+      <div class="product">
+        <h3>Cruzer Force 64GB USB</h3>
+        <img src="usb.webp" alt="Cruzer Force USB">
+        <p class="price">EGP 2000</p>
+        <p>200 mph 64GB USB</p>
+        <button class="buy-button" onclick="addToCart('Cruzer Force 64GB USB', 2000)">Add to Cart</button>
+        <button class="buy-button">Buy Now</button>
+      </div>
+      <div class="product">
+        <h3>Speed McQueen Car</h3>
+        <img src="R.webp" alt="Speed McQueen Car">
+        <p class="price">EGP 900</p>
+        <p>Fast toy car with movie-accurate detail.</p>
+        <button class="buy-button" onclick="addToCart('Speed McQueen Car', 900)">Add to Cart</button>
+        <button class="buy-button">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
