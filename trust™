@@ -1,146 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Trust™ Shop</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f8f8;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #222;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px;
-    }
-
-    .product-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .product {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 280px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .product h3 {
-      margin-top: 0;
-    }
-
-    .product img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-      border-radius: 5px;
-    }
-
-    .price {
-      font-size: 20px;
-      color: green;
-      margin: 10px 0;
-    }
-
-    .buy-button {
-      background: #007BFF;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .buy-button:hover {
-      background: #0056b3;
-    }
-
-    .cart {
-      margin-top: 40px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-
-    .cart h2 {
-      margin-top: 0;
-    }
-
-    .cart ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .cart li {
-      padding: 5px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .total {
-      font-weight: bold;
-      margin-top: 15px;
-      font-size: 18px;
-    }
-
-    .warning {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini Roblox -- The Ultimate Hub</title>
+<style>
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#071028;color:#e6eef8;display:flex;height:100vh}
+  #sidebar{width:320px;padding:16px;background:rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px}
+  input{padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+  button{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:inherit;cursor:pointer}
+  #main{flex:1;position:relative;overflow:hidden}
+  canvas{display:block;width:100%;height:100%}
+  #topMoney{position:absolute;left:50%;transform:translateX(-50%);top:12px;background:rgba(0,0,0,0.5);padding:8px 12px;border-radius:8px;font-weight:700;z-index:20}
+  #overlay{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.35);padding:8px;border-radius:8px;z-index:20}
+  #toolbar{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.35);padding:8px;border-radius:10px;display:flex;gap:8px;z-index:20}
+  .seedBtn{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);cursor:pointer;background:transparent;color:inherit}
+  #hudRight{position:absolute;right:12px;top:12px;background:rgba(0,0,0,0.35);padding:8px;border-radius:8px;z-index:20}
+</style>
 </head>
 <body>
-  <header>
-    Trust™ Shop
-  </header>
+  <aside id="sidebar">
+    <h2>Mini Roblox -- The Ultimate Hub</h2>
+    <p style="font-size:14px;opacity:0.8;">
+      About Mini Roblox: This is a mini Roblox because David Baszucki is bad.
+    </p>
+    <label>Enter your name:</label>
+    <input id="playerName" placeholder="Type name..." />
+    <button onclick="loadGame('garden')">🌱 Grow a Garden</button>
+    <button onclick="loadGame('brainrot')">🧠 Steal a Brainrot</button>
+  </aside>
+  <main id="main">
+    <div id="topMoney" style="display:none">Money: $0</div>
+    <canvas id="gameCanvas"></canvas>
+    <div id="overlay"></div>
+    <div id="toolbar"></div>
+    <div id="hudRight"></div>
+  </main>
+<script>
+let currentGame="",money=0,ctx,canvas=document.getElementById("gameCanvas");
+canvas.width=window.innerWidth-320;canvas.height=window.innerHeight;
+ctx=canvas.getContext("2d");
+const moneyDiv=document.getElementById("topMoney");
+function updateMoney(){moneyDiv.innerText="Money: $"+money;}
 
-  <div class="container">
-    <div class="product-list">
-      <div class="product">
-        <h3>Smart Dog</h3>
-        <img src="OIP.webp" alt="Smart Dog">
-<p class="price">EGP 2500</p>
-        <p>Clever robot dog that obeys your commands.</p>
-        <button class="buy-button" onclick="addToCart('Smart Dog', 2500)">Add to Cart</button>
-        <button class="buy-button">Buy Now</button>
-      </div>
+function loadGame(game){
+  currentGame=game;money=0;moneyDiv.style.display="block";updateMoney();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  document.getElementById("overlay").innerHTML=`<h3>${game==="garden"?"Grow a Garden":"Steal a Brainrot"}</h3>
+    <button onclick="leaveGame()">Leave</button>`;
+  if(game==="garden") initGarden();
+  if(game==="brainrot") initBrainrot();
+}
 
-      <div class="product">
-        <h3>Cruzer Force 64GB USB</h3>
-        <img src="usb.webp" alt="Cruzer Force USB">
-        <p class="price">EGP 2000</p>
-        <p>200 mph 64GB USB</p>
-        <button class="buy-button" onclick="addToCart('Cruzer Force 64GB USB', 2000)">Add to Cart</button>
-        <button class="buy-button">Buy Now</button>
-      </div>
-      <div class="product">
-        <h3>Speed McQueen Car</h3>
-        <img src="R.webp" alt="Speed McQueen Car">
-        <p class="price">EGP 900</p>
-        <p>Fast toy car with movie-accurate detail.</p>
-        <button class="buy-button" onclick="addToCart('Speed McQueen Car', 900)">Add to Cart</button>
-        <button class="buy-button">Buy Now</button>
-      </div>
-    </div>
-  </div>
+function leaveGame(){
+  currentGame="";money=0;moneyDiv.style.display="none";
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  document.getElementById("overlay").innerHTML="";
+  document.getElementById("toolbar").innerHTML="";
+  document.getElementById("hudRight").innerHTML="";
+}
+
+// --- Grow a Garden ---
+let plots=[];
+function initGarden(){
+  plots=[];
+  for(let i=0;i<6;i++){plots.push({x:100+i*120,y:200,plant:null});}
+  drawGarden();
+}
+function drawGarden(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  plots.forEach(p=>{
+    ctx.strokeStyle="white";ctx.strokeRect(p.x,p.y,100,100);
+    if(p.plant){ctx.fillText("🥕",p.x+40,p.y+55);}
+  });
+}
+canvas.addEventListener("click",e=>{
+  if(currentGame==="garden"){
+    plots.forEach(p=>{
+      if(e.offsetX>p.x&&e.offsetX<p.x+100&&e.offsetY>p.y&&e.offsetY<p.y+100){
+        if(!p.plant){p.plant="carrot";}else{p.plant=null;money+=10;updateMoney();}
+        drawGarden();
+      }
+    });
+  }
+});
+
+// --- Steal a Brainrot ---
+let bases=[],brainrots=[];
+function initBrainrot(){
+  bases=[
+    {name:"My Base",x:200,y:300,isPlayer:true},
+    {name:"Bot1 Base",x:700,y:100},
+    {name:"Bot2 Base",x:1000,y:400},
+    {name:"Bot3 Base",x:1400,y:200}
+  ];
+  brainrots=[];
+  document.getElementById("toolbar").innerHTML=`<button onclick="spawnBrainrot()">Spawn Brainrot</button>`;
+  drawBrainrot();
+}
+function drawBrainrot(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  bases.forEach(b=>{
+    ctx.strokeStyle=b.isPlayer?"yellow":"red";
+    ctx.strokeRect(b.x,b.y,120,120);
+    ctx.fillText(b.name,b.x,b.y-5);
+  });
+  brainrots.forEach(br=>{
+    ctx.fillText("🧠",br.x,br.y);
+    ctx.fillText("Sell",br.x,br.y+20);
+  });
+}
+function spawnBrainrot(){
+  let base=bases.find(b=>b.isPlayer);
+  let x=base.x+30+Math.random()*60,y=base.y+30+Math.random()*60;
+  brainrots.push({x,y});
+  drawBrainrot();
+}
+canvas.addEventListener("click",e=>{
+  if(currentGame==="brainrot"){
+    brainrots.forEach((br,i)=>{
+      if(e.offsetX>br.x-10&&e.offsetX<br.x+40&&e.offsetY>br.y-10&&e.offsetY<br.y+40){
+        brainrots.splice(i,1);money+=20;updateMoney();
+        drawBrainrot();
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>
